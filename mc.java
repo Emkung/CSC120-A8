@@ -2,11 +2,11 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.Arrays;
 public abstract class mc implements Contract{
-    public int name;
-    public int attack = 5;
-    public int speed = 5;
-    public int hp = 5;
-    public int iq = 5;
+    public String name;
+    public static int attack = 5;
+    public static int speed = 5;
+    public static int hp = 5;
+    public static int iq = 5;
     public int west;
     public int east;
     public int north;
@@ -20,10 +20,8 @@ public abstract class mc implements Contract{
     public ArrayList<String> ehdes = new ArrayList<String>(Arrays.asList("increases HP by 5 and decreases attack by 3", "increases attack 5 and decreases speed by 7", "increases IQ 5 and decreases attack by 3", "increases speed 5 and decreases attack by 5"));
     public int ehSize = 5;
     public ArrayList<String> correspondingAbility = new ArrayList<String>(Arrays.asList("HP", "attack", "IQ", "speed"));
-    public ArrayList<String> inventory;
-    Hashtable<String, String> inverse;
+    public ArrayList<String> inventory =  new ArrayList<String>();
     public int invSize = 20;
-    public boolean levelUp = false;
     /**
      * grabs item
      * @param item stuff you put in your inventory 
@@ -65,36 +63,36 @@ public abstract class mc implements Contract{
      * @param item stuff you find
      */
     public void examine(String item){
-        System.out.println(this.name + "picked up and examined" + item);
+        System.out.println(this.name + " picked up and examined " + item);
         String itemname = " ";
         String ability = " ";
-        String printedString = "it is a" + itemname + "that would increase your"+ ability + "by 1!";
-        if (item == helpfulitems.get(1)){
+        String printedString = "it is a " + itemname + " that would increase your "+ ability + " by 1!";
+        if (item == helpfulitems.get(0)){
+            itemname = helpfulitems.get(0);
+            ability = correspondingAbility.get(10);
+            System.out.println(printedString);
+        }else if (item == helpfulitems.get(1)){
             itemname = helpfulitems.get(1);
             ability = correspondingAbility.get(1);
             System.out.println(printedString);
-        }if (item == helpfulitems.get(2)){
+        }else if (item == helpfulitems.get(2)){
             itemname = helpfulitems.get(2);
             ability = correspondingAbility.get(2);
             System.out.println(printedString);
-        }if (item == helpfulitems.get(3)){
+        }else if (item == helpfulitems.get(3)){
             itemname = helpfulitems.get(3);
             ability = correspondingAbility.get(3);
             System.out.println(printedString);
-        }if (item == helpfulitems.get(4)){
-            itemname = helpfulitems.get(4);
-            ability = correspondingAbility.get(4);
+        }else if (item == ehitems.get(0)){
+            System.out.println(ehitems.get(0) + " " + ehdes.get(0));
+        }else if (item == helpfulitems.get(1)){
+            System.out.println(ehitems.get(1) + " " + ehdes.get(1));
             System.out.println(printedString);
-        }if (item == ehitems.get(1)){
-            System.out.println(ehitems.get(1) + ehdes.get(1));
-        }if (item == helpfulitems.get(2)){
-            System.out.println(ehitems.get(2) + ehdes.get(2));
+        }else if (item == helpfulitems.get(2)){
+            System.out.println(ehitems.get(2) + " " + ehdes.get(2));
             System.out.println(printedString);
-        }if (item == helpfulitems.get(3)){
-            System.out.println(ehitems.get(3) + ehdes.get(3));
-            System.out.println(printedString);
-        }if (item == helpfulitems.get(4)){
-            System.out.println(ehitems.get(3) + ehdes.get(3));
+        }else if (item == helpfulitems.get(3)){
+            System.out.println(ehitems.get(3) + " " + ehdes.get(3));
         }
     }
     /** 
@@ -102,66 +100,69 @@ public abstract class mc implements Contract{
      * @param item stuff you  use from your inventory 
      */
     public void use(String item){
-        System.out.println(this.name + "used" + item);
+        System.out.println(this.name + " used " + item);
         String ability = " ";
         String ability2 = " ";
         int number = 0;
         int number2 = 0;
-        String s = Integer.toString(number);
-        String s2 = Integer.toString(number2);
-        String printedString = ability + "increases by 1.";
-        String printedString2 = ability + "increases by" + s + "and" + ability + "decreases by" + s2;
-        if (inventory.contains(item)){
-            if (item == helpfulitems.get(1)){
-                ability = correspondingAbility.get(1);
-                System.out.println(printedString);
+        if (inventory.contains(item) && helpfulitems.contains(item)){
+            if (item == helpfulitems.get(0)){
+                ability = correspondingAbility.get(0);
+                // System.out.println(printedString);
                 this.hp+= 1;
-            }if (item == helpfulitems.get(2)){
-                ability = correspondingAbility.get(2);
+            }else if (item == helpfulitems.get(1)){
+                ability = correspondingAbility.get(1);
                 this.attack+= 1;
-                System.out.println(printedString);
-            }if (item == helpfulitems.get(3)){
-                ability = correspondingAbility.get(3);
-                System.out.println(printedString);
+                // System.out.println(printedString);
+            }else if (item == helpfulitems.get(2)){
+                ability = correspondingAbility.get(2);
+                // System.out.println(printedString);
                 this.iq+= 1;
-            }if (item == helpfulitems.get(4)){
-                ability = correspondingAbility.get(4);
-                System.out.println(printedString);
+            }else if (item == helpfulitems.get(3)){
+                ability = correspondingAbility.get(3);
+                // System.out.println(printedString);
                 this.speed+= 1;
-            }if (item == ehitems.get(1)){
+            }String printedString = ability + " increases by 1.";
+            System.out.println(printedString);
+        }
+        if (inventory.contains(item) && ehitems.contains(item)){
+            if (item == ehitems.get(0)){
                 ability = "HP";
                 ability2 = "attack";
                 number = 5;
                 number2 = 3;
                 this.hp+= 5;
                 this.attack -= 3;
-                System.out.println(printedString2);
-            }if (item == helpfulitems.get(2)){
+                // System.out.println(printedString2);
+            }else if (item == helpfulitems.get(1)){
                 ability = "attack";
                 ability2 = "speed";
                 number = 5;
                 number2 = 7;
                 this.attack+= 5;
                 this.speed -= 7;
-                System.out.println(printedString2);
-            }if (item == helpfulitems.get(3)){
+                // System.out.println(printedString2);
+            }else if (item == helpfulitems.get(2)){
                 ability = "IQ";
                 ability2 = "attack";
                 number = 5;
                 number2 = 3;
                 this.iq+= 5;
                 this.attack-=3;
-                System.out.println(printedString2);
-            }if (item == helpfulitems.get(4)){
+                // System.out.println(printedString2);
+            }else if (item == helpfulitems.get(3)){
                 ability = "speed";
                 ability2 = "attack";
                 number = 5;
                 number2 = 5;
                 this.speed+= 5;
                 this.attack-= 5;
-                System.out.println(printedString2);
-            }
-        }
+                // System.out.println(printedString2);
+            }String s = Integer.toString(number);
+            String s2 = Integer.toString(number2);
+            String printedString2 = ability + " increases by " + s + " and " + ability2 + " decreases by " + s2;
+            System.out.println(printedString2);
+        }      
     }
     /** 
      * to move to different directions
@@ -173,13 +174,13 @@ public abstract class mc implements Contract{
         this.south = 0;
         this.west = 0;
         if (this.speed > 0){
-            if (direction ==directionalcmd.get(1)){
+            if (direction ==directionalcmd.get(0)){
                 this.north += 1;    
-            }if (direction ==directionalcmd.get(2)){
+            }else if (direction ==directionalcmd.get(1)){
                 this.east += 1;
-            }if (direction ==directionalcmd.get(3)){
+            }else if (direction ==directionalcmd.get(2)){
                 this.south += 1;
-            }if (direction ==directionalcmd.get(3)){
+            }else if (direction ==directionalcmd.get(3)){
             this.west += 1;
             }else{
             throw new RuntimeException("I don't understand where to go...");
